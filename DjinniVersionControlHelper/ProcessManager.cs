@@ -7,10 +7,25 @@ using System.Threading.Tasks;
 
 namespace DjinniVersionControlHelper
 {
-    class ProcessKiller
+    class ProcessManager
     {
         private Process[] processes;
         private string editorProcessName = "Notepad";
+
+        public bool EditorProcessExist()
+        {
+            processes = Process.GetProcesses();
+
+            foreach (Process proc in processes)
+            {
+                if (proc.ProcessName == "djinni!")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         public void KillEditorProcess()
         {
@@ -30,7 +45,6 @@ namespace DjinniVersionControlHelper
             {
                 throw new NullReferenceException();
             }
-            
         }
     }
 }

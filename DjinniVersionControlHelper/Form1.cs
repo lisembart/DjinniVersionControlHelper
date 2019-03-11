@@ -20,7 +20,8 @@ namespace DjinniVersionControlHelper
             System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         private string gitPathFirstText = "Path to Git folder: ";
 
-        private ProcessKiller processKiller;
+        private ProcessManager processManager;
+        private FilesManager filesManager;
 
         public Form1()
         {
@@ -40,9 +41,11 @@ namespace DjinniVersionControlHelper
                 }
             }
 
+            processManager = new ProcessManager();
+            filesManager = new FilesManager(filePaths.GitModPath, filePaths.EditorModPath);
+
             Application.ApplicationExit += OnApplicationQuit;
             UpdateGitPathLabel();
-            processKiller = new ProcessKiller();
         }
 
         private void setGitPathBtn_Click(object sender, EventArgs e)
@@ -51,7 +54,7 @@ namespace DjinniVersionControlHelper
             {
                 filePaths.GitModPath = gitFolderBrowserDialog.SelectedPath;
             }
-
+            filesManager.UpdatePaths(filePaths.GitModPath, filePaths.EditorModPath);
             UpdateGitPathLabel();
         }
 
@@ -91,13 +94,51 @@ namespace DjinniVersionControlHelper
             {
                 try
                 {
-                    processKiller.KillEditorProcess();
+                    processManager.KillEditorProcess();
+                    try
+                    {
+                        filesManager.CopyFilesToGitDirectory();
+                        MessageBox.Show("Files copied to git directory succesfully");
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        MessageBox.Show("Editor mod directory is empty", "No files error", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
                 }
                 catch (NullReferenceException ex)
                 {
                     MessageBox.Show("There is no Djinni! process running now", "No editor running error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void copyToEditorModDirectoryBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Remeber to close all Djinni! instances before continuing", "Warning",
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            if (result == DialogResult.OK)
+            {
+                if (!processManager.EditorProcessExist())
+                {
+                    try
+                    {
+                        filesManager.CopyFilesToEditorDirectory();
+                        MessageBox.Show("Files copied to editor directory succesfully");
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        MessageBox.Show("Git mod directory is empty", "No files error", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Djinni! process still running, please turn it off before continuing", "Djinni! process running error", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }            
             }
         }
     }

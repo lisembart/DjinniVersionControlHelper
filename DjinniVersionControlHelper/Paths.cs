@@ -11,7 +11,12 @@ namespace DjinniVersionControlHelper
 {
     class Paths
     {
-        private string editorModPath;
+        private string editorModPath = @"C:\Users\lisem\AppData\Local\The Witcher\temp\__ResourcesUnpackTmp";
+
+        public string EditorModPath
+        {
+            get { return editorModPath; }
+        }
 
         private string gitModPath;
         public string GitModPath
