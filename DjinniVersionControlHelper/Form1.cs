@@ -16,7 +16,7 @@ namespace DjinniVersionControlHelper
     {
         private Paths filePaths;
 
-        private string saveFilePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        private string saveFilePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\paths.dat";
         private string gitPathFirstText = "Path to Git folder: ";
 
         private ProcessManager processManager;
@@ -26,6 +26,8 @@ namespace DjinniVersionControlHelper
         {
             InitializeComponent();
 
+            Console.WriteLine(saveFilePath);
+
             if (!File.Exists(saveFilePath))
             {
                 Console.WriteLine("No save file, set git path");
@@ -34,7 +36,7 @@ namespace DjinniVersionControlHelper
             else
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                using (Stream stream = File.OpenRead(saveFilePath))
+                using (FileStream stream = new FileStream(saveFilePath, FileMode.Open))
                 {
                     filePaths = (Paths)bf.Deserialize(stream);
                 }
@@ -71,10 +73,17 @@ namespace DjinniVersionControlHelper
 
         private void SavePathSettings()
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            using (Stream stream = File.Create(saveFilePath))
+            try
             {
-                bf.Serialize(stream, filePaths);
+                BinaryFormatter bf = new BinaryFormatter();
+                using (FileStream stream = new FileStream(saveFilePath, FileMode.Create))
+                {
+                    bf.Serialize(stream, filePaths);
+                }
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show("PROBLEM Z SERIALIZACJĄ :P");
             }
         }
 

@@ -95,6 +95,8 @@
             this.Controls.Add(this.setGitPathBtn);
             this.Controls.Add(this.gitFolderPathLabel);
             this.Controls.Add(this.label1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
             this.Text = "Djinni Version Control Helper";
             this.ResumeLayout(false);

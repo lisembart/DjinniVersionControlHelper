@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DjinniVersionControlHelper
 {
+    [Serializable]
     class Paths
     {
         private string editorModPath = @"C:\Users\lisem\AppData\Local\The Witcher\temp\__ResourcesUnpackTmp";
