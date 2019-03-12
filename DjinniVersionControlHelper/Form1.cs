@@ -16,8 +16,7 @@ namespace DjinniVersionControlHelper
     {
         private Paths filePaths;
 
-        private string saveFilePath =
-            System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        private string saveFilePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         private string gitPathFirstText = "Path to Git folder: ";
 
         private ProcessManager processManager;
@@ -35,7 +34,7 @@ namespace DjinniVersionControlHelper
             else
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                using (FileStream stream = new FileStream(saveFilePath, FileMode.Open))
+                using (Stream stream = File.OpenRead(saveFilePath))
                 {
                     filePaths = (Paths)bf.Deserialize(stream);
                 }
@@ -70,19 +69,19 @@ namespace DjinniVersionControlHelper
             }
         }
 
+        private void SavePathSettings()
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            using (Stream stream = File.Create(saveFilePath))
+            {
+                bf.Serialize(stream, filePaths);
+            }
+        }
+
         private void OnApplicationQuit(object sender, EventArgs eventArgs)
         {
             Console.WriteLine("Application quiting");
             SavePathSettings();
-        }
-
-        private void SavePathSettings()
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            using (FileStream stream = new FileStream(saveFilePath, FileMode.Create))
-            {
-                bf.Serialize(stream, filePaths);
-            }
         }
 
         private void copyToGitDirectoryBtn_Click(object sender, EventArgs e)
