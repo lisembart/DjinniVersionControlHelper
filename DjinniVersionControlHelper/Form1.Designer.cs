@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.gitFolderPathLabel = new System.Windows.Forms.Label();
             this.setGitPathBtn = new System.Windows.Forms.Button();
@@ -95,10 +96,11 @@
             this.Controls.Add(this.setGitPathBtn);
             this.Controls.Add(this.gitFolderPathLabel);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
-            this.Text = "Djinni Version Control Helper";
+            this.Text = "Djinni! Version Control Helper";
             this.ResumeLayout(false);
             this.PerformLayout();
 
