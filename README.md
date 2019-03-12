@@ -1,0 +1,5 @@
+## Djinni! Version Control Helper 
+
+Djinni! Version Control Helper is a tool which will help you use Version Control Systems with your mods for The Witcher. When you open Djinni! project, all content of your mod is extracted to special temporary directory _ResourcesUnpackTmp. When you work with editor, you work on those files. When you click "Save module", Djinni! Editor saves all changes to .ADV file. When you close editor, all those files are closed. But when you will crash editor, those files are still avalible, and you can copy them and send on Git server. That's what Djinni! Version Control Helper do. It will crash Djinni! Editor and then it will copy all your project files to your Git directory. Also it can copy files from Git directory and paste it to your editor directory. 
+
+![Screenshot](C:\Projects\CSharpProjects\DjinniVersionControlHelper\Screenshot.png)
