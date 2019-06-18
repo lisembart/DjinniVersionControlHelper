@@ -45,6 +45,9 @@ namespace DjinniVersionControlHelper
             processManager = new ProcessManager();
             filesManager = new FilesManager(filePaths.GitModPath, filePaths.EditorModPath);
 
+            pathToModFilesLabel.Text = string.Empty;
+            pathToModFilesLabel.Text = "Path to Djinni mod files: " + filePaths.EditorModPath;
+
             Application.ApplicationExit += OnApplicationQuit;
             UpdateGitPathLabel();
         }
@@ -148,6 +151,11 @@ namespace DjinniVersionControlHelper
                         MessageBoxIcon.Error);
                 }            
             }
+        }
+
+        private void OpenGitDirectoryButton_Click(object sender, EventArgs e)
+        {
+            filesManager.OpenDirectory(filePaths.GitModPath);
         }
     }
 }

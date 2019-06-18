@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 
 namespace DjinniVersionControlHelper
 {
@@ -43,6 +44,21 @@ namespace DjinniVersionControlHelper
             {
                 throw new FileNotFoundException();
             }
+        }
+
+        public void OpenDirectory(string path)
+        {
+            string formatedPath = string.Empty;
+            for(int i = 0; i < path.Length; i++)
+            {
+                string currentChar = path[i].ToString();
+                if(currentChar == @"\")
+                {
+                    currentChar = "/";
+                }
+                formatedPath += currentChar;
+            }
+            Process.Start(formatedPath);
         }
 
         public void CopyFilesToEditorDirectory()

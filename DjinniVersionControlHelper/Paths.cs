@@ -12,8 +12,8 @@ namespace DjinniVersionControlHelper
     [Serializable]
     class Paths
     {
-        private string editorModPath = @"C:\Users\lisem\AppData\Local\The Witcher\temp\__ResourcesUnpackTmp";
-
+        //private string editorModPath = @"C:\Users\lisem\AppData\Local\The Witcher\temp\__ResourcesUnpackTmp";
+        private string editorModPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\AppData\Local\The Witcher\temp\__ResourcesUnpackTmp";
         public string EditorModPath
         {
             get { return editorModPath; }
